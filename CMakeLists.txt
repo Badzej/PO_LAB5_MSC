@@ -22,9 +22,15 @@ set(SOURCES
         FabrykaObiektowSISO.cpp
         MenadzerPlikow.cpp
         UI/InterfejsUzytkownika.h
-        UI/MenadzerKonfiguracji.cpp
-        UI/MenadzerKonfiguracji.h
+        Konfiguracja/MenadzerKonfiguracji.cpp
+        Konfiguracja/MenadzerKonfiguracji.h
         UI/InterfejsUzytkownika.cpp
+        UI/Menu.cpp
+        UI/Menu.h
+        UI/ObslugaWejscia.cpp
+        UI/ObslugaWejscia.h
+        UI/KreatorObiektuSISO.cpp
+        UI/KreatorObiektuSISO.h
 )
 
 add_executable(PO_LAB5_MSC ${SOURCES})

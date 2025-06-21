@@ -1,7 +1,7 @@
 #include "MenadzerKonfiguracji.h"
 
 #include "SygnalFabryka.h"
-#include "..\FabrykaObiektowSISO.h"
+#include "../FabrykaObiektowSISO.h"
 #include <fstream>
 
 // Settery
