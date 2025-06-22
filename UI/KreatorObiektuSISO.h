@@ -8,6 +8,7 @@
 #include "..\Dekoratory\DekoratorSISORownolegly.h"
 #include "..\Dekoratory\DekoratorSISOSzeregowy.h"
 /**
+ * @author Błażej Styrnol
  * @class KreatorObiektuSISO
  * @brief Kreator obiektów SISO do budowy struktur symulacji
  */

@@ -3,6 +3,7 @@
 #include <limits>
 
 /**
+ * @author Błażej Styrnol
  * @class ObslugaWejscia
  * @brief Klasa narzędziowa do pobierania danych od użytkownika z konsoli.
  */

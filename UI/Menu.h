@@ -2,6 +2,7 @@
 #include <iostream>
 
 /**
+ * @author Błażej Styrnol
  * @class Menu
  * @brief Klasa pomocnicza do wyświetlania menu tekstowych w aplikacji.
  */

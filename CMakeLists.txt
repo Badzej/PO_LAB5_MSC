@@ -20,7 +20,6 @@ set(SOURCES
         Dekoratory/DekoratorSISOSzeregowy.cpp
         Dekoratory/DekoratorSISORownolegly.cpp
         FabrykaObiektowSISO.cpp
-        MenadzerPlikow.cpp
         UI/InterfejsUzytkownika.h
         Konfiguracja/MenadzerKonfiguracji.cpp
         Konfiguracja/MenadzerKonfiguracji.h
@@ -31,6 +30,8 @@ set(SOURCES
         UI/ObslugaWejscia.h
         UI/KreatorObiektuSISO.cpp
         UI/KreatorObiektuSISO.h
+        Testy/test_zapis_odczyt.cpp
+        Testy/test_zapis_odczyt.h
 )
 
 add_executable(PO_LAB5_MSC ${SOURCES})

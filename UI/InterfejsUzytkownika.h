@@ -19,6 +19,7 @@
 #include "KreatorObiektuSISO.h"
 
 /**
+ * @author Błażej Styrnol
  * @class InterfejsUzytkownika
  * @brief Główna klasa interfejsu tekstowego do zarządzania symulatorem
  *

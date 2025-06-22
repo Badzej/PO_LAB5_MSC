@@ -3,7 +3,6 @@
 #include <memory>
 #include <../include_ext_lib/json.hpp>
 
-#include "../MenadzerPlikow.h"
 #include "../Sygnaly/Sygnal.h"
 #include "../ObiektSISO.h"
 /**
@@ -26,13 +25,13 @@ public:
      * @brief Ustawia sygnał wejściowy.
      * @param sygnal Wskaźnik do sygnału wejściowego.
      */
-    void ustawSygnalWejsciowy(std::shared_ptr<Sygnal> sygnal);
+    void ustawSygnalWejsciowy(const std::shared_ptr<Sygnal>& sygnal);
 
     /**
      * @brief Ustawia układ symulowany.
      * @param uklad Wskaźnik do obiektu SISO będącego układem.
      */
-    void ustawSymulowanyUklad(std::shared_ptr<ObiektSISO> uklad);
+    void ustawSymulowanyUklad(const std::shared_ptr<ObiektSISO>& uklad);
 
     /**
      * @brief Zwraca wskaźnik do bieżącego sygnału wejściowego.
@@ -50,7 +49,7 @@ public:
      * @brief Serializuje całą konfigurację do obiektu JSON.
      * @return Obiekt JSON zawierający konfigurację sygnału i układu.
      */
-    nlohmann::json serializuj() const ;
+    [[nodiscard]] nlohmann::json serializuj() const ;
 
     /**
      * @brief Deserializuje konfigurację z obiektu JSON.

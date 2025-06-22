@@ -54,10 +54,10 @@ int ObslugaWejscia::pobierzDodatniaLiczbeCalkowita(const std::string& prompt) {
     while (true) {
         std::cout << prompt;
         std::cin >> liczba;
-        if (std::cin.fail() || liczba <= 0) {
+        if (std::cin.fail() || liczba < 0) {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout << "Podaj nieujemną liczbę całkowitą!\n";
+            std::cout << "Podaj nieujemna liczbe całkowita!\n";
         } else {
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             return liczba;
@@ -71,7 +71,7 @@ double ObslugaWejscia::pobierzDodatniaLiczbe(const std::string& prompt) {
     while (true) {
         std::cout << prompt;
         std::cin >> liczba;
-        if (std::cin.fail() || liczba <= 0.0) {
+        if (std::cin.fail() || liczba < 0.0) {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << "Podaj liczbe nieujemna!\n";

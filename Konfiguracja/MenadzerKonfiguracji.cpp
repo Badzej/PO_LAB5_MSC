@@ -3,16 +3,16 @@
 #include "SygnalFabryka.h"
 #include "../FabrykaObiektowSISO.h"
 #include <fstream>
+#include <iostream>
 
 // Settery
-void MenadzerKonfiguracji::ustawSygnalWejsciowy(std::shared_ptr<Sygnal> sygnal) {
+void MenadzerKonfiguracji::ustawSygnalWejsciowy(const std::shared_ptr<Sygnal>& sygnal) {
     sygnal_wejsciowy = sygnal;
 }
 
-void MenadzerKonfiguracji::ustawSymulowanyUklad(std::shared_ptr<ObiektSISO> uklad) {
+void MenadzerKonfiguracji::ustawSymulowanyUklad(const std::shared_ptr<ObiektSISO>& uklad){
     symulowany_uklad = uklad;
 }
-
 // Gettery
 std::shared_ptr<Sygnal> MenadzerKonfiguracji::pobierzSygnalWejsciowy() const {
     return sygnal_wejsciowy;
@@ -43,6 +43,9 @@ void MenadzerKonfiguracji::zapiszDoPliku(const std::string& sciezka) const {
     std::ofstream plik(sciezka);
     if (plik.is_open())
         plik << j.dump(4);
+    else {
+        std::cout << "Nie udalo sie zapisac do pliku"<<sciezka<<".\n";
+    }
 }
 
 void MenadzerKonfiguracji::wczytajZPliku(const std::string& sciezka) {
@@ -51,5 +54,8 @@ void MenadzerKonfiguracji::wczytajZPliku(const std::string& sciezka) {
         nlohmann::json j;
         plik >> j;
         deserializuj(j);
+    }
+    else {
+        std::cout << "Nie udalo sie odczytac z pliku"<<sciezka<<".\n";
     }
 }

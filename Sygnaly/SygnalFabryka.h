@@ -1,4 +1,3 @@
-// SygnalFactory.h
 #pragma once
 #include <memory>
 #include "Sygnal.h"
