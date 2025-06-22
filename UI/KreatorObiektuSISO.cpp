@@ -28,21 +28,22 @@ std::shared_ptr<ObiektSISO> KreatorObiektuSISO::stworzObiektSISO() {
 
         if (wybor == 1) {
             // Pobierz parametry PID i utworz obiekt
-            double Kp = ObslugaWejscia::pobierzLiczbe("Podaj Kp: ");
-            double Ti = ObslugaWejscia::pobierzLiczbe("Podaj Ti: ");
-            double Td = ObslugaWejscia::pobierzLiczbe("Podaj Td: ");
+            double Kp = ObslugaWejscia::pobierzDodatniaLiczbe("Podaj Kp: ");
+            double Ti = ObslugaWejscia::pobierzDodatniaLiczbe("Podaj Ti: ");
+            double Td = ObslugaWejscia::pobierzDodatniaLiczbe("Podaj Td: ");
             return std::make_shared<RegulatorPID>(Kp, Ti, Td);
         } else if (wybor == 2) {
             // Pobierz parametry ARX i utworz obiekt
-            int na = ObslugaWejscia::pobierzLiczbeCalkowita("Podaj rzad wielomianu A (na): ");
-            int nb = ObslugaWejscia::pobierzLiczbeCalkowita("Podaj rzad wielomianu B (nb): ");
-            unsigned int nk = static_cast<unsigned int>(ObslugaWejscia::pobierzLiczbeCalkowita("Podaj opoznienie transportowe (k): "));
-            double sigma = ObslugaWejscia::pobierzLiczbe("Podaj odchylenie standardowe szumu (sigma): ");
+            int na = ObslugaWejscia::pobierzDodatniaLiczbeCalkowita("Podaj rzad wielomianu A (na): ");
+            int nb = ObslugaWejscia::pobierzDodatniaLiczbeCalkowita("Podaj rzad wielomianu B (nb): ");
+            unsigned int nk = static_cast<unsigned int>(ObslugaWejscia::pobierzDodatniaLiczbeCalkowita("Podaj opoznienie transportowe (k): "));
+            double sigma = ObslugaWejscia::pobierzDodatniaLiczbe("Podaj odchylenie standardowe szumu (sigma): ");
 
             std::vector<double> wspA, wspB;
 
             std::cout << "Podaj wspolczynniki A (" << na + 1 << " wartosci, oddzielone ENTEREM):\n";
-            for (int i = 0; i <= na; ++i) {
+            wspA.push_back(1); //pierwszy wspolczynnik A musi byc 1 zawsze
+            for (int i = 1; i <= na; ++i) {
                 double a = ObslugaWejscia::pobierzLiczbe("A[" + std::to_string(i) + "]: ");
                 wspA.push_back(a);
             }
@@ -62,9 +63,10 @@ std::shared_ptr<ObiektSISO> KreatorObiektuSISO::stworzObiektSISO() {
 
 // Typ: 2 = szeregowy, 3 = rownolegly
 std::shared_ptr<ObiektSISO> KreatorObiektuSISO::budujLancuchDekoratorow(int typ) {
-        int ile = ObslugaWejscia::pobierzLiczbeCalkowita("Ile blokow polaczyc? (min 2): ");
-        if (ile < 2) ile = 2;
-
+        int ile;
+        do {
+            ile = ObslugaWejscia::pobierzDodatniaLiczbeCalkowita("Ile blokow polaczyc? (min 2):  ");
+        } while (ile < 2);
         std::vector<std::shared_ptr<ObiektSISO>> bloki;
         for (int i = 0; i < ile; ++i) {
             std::cout << "Konfiguracja bloku " << (i + 1) << ":\n";
@@ -76,7 +78,7 @@ std::shared_ptr<ObiektSISO> KreatorObiektuSISO::budujLancuchDekoratorow(int typ)
             }
         }
 
-        // lańcuchowanie dekoratorow
+        // lancuchowanie dekoratorow
         std::shared_ptr<ObiektSISO> aktualny = bloki[0];
         for (size_t i = 1; i < bloki.size(); ++i) {
             if (typ == 2) // szeregowy

@@ -9,7 +9,7 @@
     uruchom();
 }
 
-void InterfejsUzytkownika::uruchom() {
+void InterfejsUzytkownika::uruchom() const{
         while (true) {
             Menu::wyswietlMenu();
             int wybor = ObslugaWejscia::pobierzWybor(0, 7);
@@ -68,32 +68,32 @@ Sygnal* InterfejsUzytkownika::stworzSygnal(int wybrany_sygnal) {
         switch (wybrany_sygnal) {
             case 1: // SygnalSinusoidalny
                 return new SygnalSinusoidalny(
-                    ObslugaWejscia::pobierzLiczbe("Podaj amplitude: "),
-                    ObslugaWejscia::pobierzLiczbe("Podaj czestotliwosc: ")
+                    ObslugaWejscia::pobierzDodatniaLiczbe("Podaj amplitude: "),
+                    ObslugaWejscia::pobierzDodatniaLiczbe("Podaj czestotliwosc: ")
                 );
             case 2: // SygnalProstokatny
                 return new SygnalProstokatny(
-                    ObslugaWejscia::pobierzLiczbe("Podaj amplitude: "),
-                    ObslugaWejscia::pobierzLiczbe("Podaj czestotliwosc: "),
-                    ObslugaWejscia::pobierzLiczbe("Podaj wypelnienie [%]: ")
+                    ObslugaWejscia::pobierzDodatniaLiczbe("Podaj amplitude: "),
+                    ObslugaWejscia::pobierzDodatniaLiczbe("Podaj czestotliwosc: "),
+                    ObslugaWejscia::pobierzDodatniaLiczbe("Podaj wypelnienie [%]: ")
                 );
             case 3: // SygnalTrojkatny
                 return new SygnalTrojkatny(
-                    ObslugaWejscia::pobierzLiczbe("Podaj amplitude: "),
-                    ObslugaWejscia::pobierzLiczbe("Podaj czestotliwosc: ")
+                    ObslugaWejscia::pobierzDodatniaLiczbe("Podaj amplitude: "),
+                    ObslugaWejscia::pobierzDodatniaLiczbe("Podaj czestotliwosc: ")
                 );
             case 4: // SygnalStaly
                 return new SygnalStaly(
-                    ObslugaWejscia::pobierzLiczbe("Podaj wartosc stala: ")
+                    ObslugaWejscia::pobierzDodatniaLiczbe("Podaj wartosc stala: ")
                 );
             case 5: // SygnalSzumBialy
                 return new SygnalSzumBialy(
-                    ObslugaWejscia::pobierzLiczbe("Podaj poziom szumu: ")
+                    ObslugaWejscia::pobierzDodatniaLiczbe("Podaj poziom szumu: ")
                 );
             case 6: { // Suma sygnalow
                 int ile;
                 do {
-                    ile = ObslugaWejscia::pobierzLiczbeCalkowita("Ile sygnalow zsumowac? (min 2): ");
+                    ile = ObslugaWejscia::pobierzDodatniaLiczbeCalkowita("Ile sygnalow zsumowac? (min 2): ");
                 } while (ile < 2);
 
                 // Tworzymy pierwszy sygnal bazowy
@@ -117,7 +117,7 @@ Sygnal* InterfejsUzytkownika::stworzSygnal(int wybrany_sygnal) {
                 Menu::wyswietlMenuSygnalow();
                 int wybor = ObslugaWejscia::pobierzWybor(1, 7); // pozwalamy na dowolny sygnal jako bazowy
                 std::unique_ptr<Sygnal> bazowy(stworzSygnal(wybor));
-                double max_amp = ObslugaWejscia::pobierzLiczbe("Podaj maksymalna amplitude (modul): ");
+                double max_amp = ObslugaWejscia::pobierzDodatniaLiczbe("Podaj maksymalna amplitude (modul): ");
                 return new SygnalZNasyceniem(std::move(bazowy), max_amp);
             }
             default:
@@ -156,7 +156,7 @@ void InterfejsUzytkownika::wyswietlJsonRekurencyjnie(const nlohmann::json& j, in
         }
     }
 
-void InterfejsUzytkownika::konfigurujPetle() {
+void InterfejsUzytkownika::konfigurujPetle() const{
         std::cout << "Konfiguracja petli symulacji:\n";
         std::shared_ptr<ObiektSISO> nowa_petla = KreatorObiektuSISO::budujBlokSISO();
         if (nowa_petla) {
@@ -194,16 +194,16 @@ void InterfejsUzytkownika::symuluj() const{
         }
 
         // Parametry symulacji
-        int liczbaProbek = ObslugaWejscia::pobierzLiczbeCalkowita("Podaj liczbe probek do symulacji: ");
-        double krok = ObslugaWejscia::pobierzLiczbe("Podaj krok czasowy [s]: ");
+        int liczbaProbek = ObslugaWejscia::pobierzDodatniaLiczbeCalkowita("Podaj liczbe probek do symulacji: ");
+        double krok = ObslugaWejscia::pobierzDodatniaLiczbe("Podaj krok czasowy [s]: ");
 
         double t = 0.0;
 
-        std::cout << "\nt\twejscie\twyjscie\n";
+        std::cout << "\nt   |   wejscie   |   wyjscie\n";
         for (int i = 0; i < liczbaProbek; ++i) {
             double u = sygnal->symuluj();      // Generuj probke sygnalu wejsciowego
             double y = uklad->symuluj(u);      // Przepusc przez uklad
-            std::cout << t << "\t" << u << "\t" << y << "\n";
+            std::cout << t << "   |   " << u << "   |   " << y << "\n";
             t += krok;
         }
         std::cout << "Symulacja zakończona.\n";
