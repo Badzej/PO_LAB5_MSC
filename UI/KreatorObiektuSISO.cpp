@@ -41,9 +41,8 @@ std::shared_ptr<ObiektSISO> KreatorObiektuSISO::stworzObiektSISO() {
 
             std::vector<double> wspA, wspB;
 
-            std::cout << "Podaj wspolczynniki A (" << na + 1 << " wartosci, oddzielone ENTEREM):\n";
-            wspA.push_back(1); //pierwszy wspolczynnik A musi byc 1 zawsze
-            for (int i = 1; i <= na; ++i) {
+            std::cout << "Podaj wspolczynniki A (" << na+1 << " wartosci, oddzielone ENTEREM):\n";
+            for (int i = 0; i <= na; ++i) {
                 double a = ObslugaWejscia::pobierzLiczbe("A[" + std::to_string(i) + "]: ");
                 wspA.push_back(a);
             }
