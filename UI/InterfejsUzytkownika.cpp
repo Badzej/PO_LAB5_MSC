@@ -69,18 +69,18 @@ Sygnal* InterfejsUzytkownika::stworzSygnal(int wybrany_sygnal) {
             case 1: // SygnalSinusoidalny
                 return new SygnalSinusoidalny(
                     ObslugaWejscia::pobierzDodatniaLiczbe("Podaj amplitude: "),
-                    ObslugaWejscia::pobierzDodatniaLiczbe("Podaj czestotliwosc: ")
+                    ObslugaWejscia::pobierzDodatniaLiczbe("Podaj czestotliwosc: ")*M_PI/100.0 //100 probek na s
                 );
             case 2: // SygnalProstokatny
                 return new SygnalProstokatny(
                     ObslugaWejscia::pobierzDodatniaLiczbe("Podaj amplitude: "),
-                    ObslugaWejscia::pobierzDodatniaLiczbe("Podaj czestotliwosc: "),
-                    ObslugaWejscia::pobierzDodatniaLiczbe("Podaj wypelnienie [%]: ")
+                    ObslugaWejscia::pobierzDodatniaLiczbe("Podaj czestotliwosc: ")*M_PI/100.0, //100 probek na s
+                    ObslugaWejscia::pobierzDodatniaLiczbe("Podaj wypelnienie [%]: ")/100.0
                 );
             case 3: // SygnalTrojkatny
                 return new SygnalTrojkatny(
                     ObslugaWejscia::pobierzDodatniaLiczbe("Podaj amplitude: "),
-                    ObslugaWejscia::pobierzDodatniaLiczbe("Podaj czestotliwosc: ")
+                    ObslugaWejscia::pobierzDodatniaLiczbe("Podaj czestotliwosc: ")*M_PI/100.0 //100 probek na s
                 );
             case 4: // SygnalStaly
                 return new SygnalStaly(
@@ -195,20 +195,15 @@ void InterfejsUzytkownika::symuluj() const{
 
         // Parametry symulacji
         int liczbaProbek = ObslugaWejscia::pobierzDodatniaLiczbeCalkowita("Podaj liczbe probek do symulacji: ");
-        double krok = ObslugaWejscia::pobierzDodatniaLiczbe("Podaj krok czasowy [s]: ");
 
-        double t = 0.0;
-
-        std::cout << "\nt   |   wejscie   |   wyjscie\n";
+        std::cout << "\nprobka   |   wejscie   |   wyjscie\n";
         for (int i = 0; i < liczbaProbek; ++i) {
             double u = sygnal->symuluj();      // Generuj probke sygnalu wejsciowego
             double y = uklad->symuluj(u);      // Przepusc przez uklad
-            std::cout << t << "   |   " << u << "   |   " << y << "\n";
-            t += krok;
+            std::cout << i << "   |   " << u << "   |   " << y << "\n";
         }
-        std::cout << "Symulacja zakończona.\n";
+        std::cout << "Symulacja zakonczona.\n";
     }
-
 void InterfejsUzytkownika::zapiszKonfiguracje() const{
         std::string sciezka;
         std::cout << "Podaj nazwe pliku do zapisu konfiguracji: ";
